@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartVisitDesa</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        input, textarea, button { display: block; width: 100%; margin-top: 10px; padding: 8px; }
+        .destination { display: flex; justify-content: space-between; margin-top: 10px; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+        .edit, .delete { cursor: pointer; margin-left: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SmartVisitDesa</h1>
+        <h2>Kelola Destinasi Wisata</h2>
+        <input type="text" id="name" placeholder="Nama Destinasi">
+        <textarea id="description" placeholder="Deskripsi Destinasi"></textarea>
+        <button onclick="addOrUpdateDestination()">Tambah Destinasi</button>
+
+        <h2>Daftar Destinasi</h2>
+        <div id="destinationList"></div>
+    </div>
+
+    <script>
+        let destinations = [];
+        let editingIndex = null;
+
+        function addOrUpdateDestination() {
+            let name = document.getElementById("name").value.trim();
+            let description = document.getElementById("description").value.trim();
+            
+            if (!name || !description) {
+                alert("Nama dan deskripsi harus diisi!");
+                return;
+            }
+
+            if (editingIndex !== null) {
+                destinations[editingIndex] = { name, description };
+                editingIndex = null;
+            } else {
+                destinations.push({ name, description });
+            }
+
+            document.getElementById("name").value = "";
+            document.getElementById("description").value = "";
+
+            renderDestinations();
+        }
+
+        function editDestination(index) {
+            document.getElementById("name").value = destinations[index].name;
+            document.getElementById("description").value = destinations[index].description;
+            editingIndex = index;
+        }
+
+        function deleteDestination(index) {
+            destinations.splice(index, 1);
+            renderDestinations();
+        }
+
+        function renderDestinations() {
+            let list = document.getElementById("destinationList");
+            list.innerHTML = "";
+
+            destinations.forEach((destination, index) => {
+                list.innerHTML += `
+                    <div class="destination">
+                        <span>${destination.name} - ${destination.description}</span>
+                        <div>
+                            <span class="edit" onclick="editDestination(${index})">✏️</span>
+                            <span class="delete" onclick="deleteDestination(${index})">❌</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

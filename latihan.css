@@ -1,0 +1,15 @@
+h1{
+    text-align: center;
+}
+.box{
+    background: rgb(176, 156, 206);
+    height: 200px;
+    width: 300px;
+    margin: 20px;
+}
+.boxdua{
+    background-color: rgb(219, 147, 147);
+    height: 100px;
+    width: 200px;
+    margin-left: 70px;
+}
